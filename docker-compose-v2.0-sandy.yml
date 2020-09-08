@@ -1,0 +1,190 @@
+version: '2'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    labels: 
+      kompose.service.type: nodeport
+    ports:
+      - 5672
+      - 15672:15672
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  config:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: sandyhu/piggymetrics-config
+    restart: always
+    ports:
+      - 8888
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  registry:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: sandyhu/piggymetrics-registry
+    restart: always
+    depends_on:
+      - config
+    labels: 
+      kompose.service.type: loadbalancer
+    ports:
+      - 8761:8761
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  gateway:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: sandyhu/piggymetrics-gateway
+    restart: always
+    depends_on:
+      - config
+    labels: 
+      kompose.service.type: loadbalancer
+    ports:
+      - 4000:4000
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  auth-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
+      STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
+      ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: sandyhu/piggymetrics-auth-service
+    restart: always
+    ports:
+      - 5000
+    depends_on:
+      - config
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  auth-mongodb:
+    environment:
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: sandyhu/piggymetrics-mongodb
+    restart: always
+    ports:
+      - 27017
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  account-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: sandyhu/piggymetrics-account-service
+    restart: always
+    ports:
+      - 6000
+    depends_on:
+      - config
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  account-mongodb:
+    environment:
+      INIT_DUMP: account-service-dump.js
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: sandyhu/piggymetrics-mongodb
+    restart: always
+    ports:
+      - 27017
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  statistics-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
+    image: sandyhu/piggymetrics-statistics-service
+    restart: always
+    ports:
+      - 8888
+    depends_on:
+      - config
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  statistics-mongodb:
+    environment:
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: sandyhu/piggymetrics-mongodb
+    restart: always
+    ports:
+      - 27017
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  notification-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
+    image: sandyhu/piggymetrics-notification-service
+    restart: always
+    ports:
+      - 8000
+    depends_on:
+      - config
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  notification-mongodb:
+    image: sandyhu/piggymetrics-mongodb
+    restart: always
+    environment:
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    ports:
+      - 27017
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  monitoring:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: sandyhu/piggymetrics-monitoring
+    restart: always
+    depends_on:
+      - config
+    labels: 
+      kompose.service.type: loadbalancer
+    ports:
+      - 9000:8080
+      - 8989:8989
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"

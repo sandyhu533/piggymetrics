@@ -1,0 +1,9 @@
+docker rmi sandyhu/piggymetrics-account-service
+docker rmi sandyhu/piggymetrics-auth-service 
+docker rmi sandyhu/piggymetrics-config
+docker rmi sandyhu/piggymetrics-gateway
+docker rmi sandyhu/piggymetrics-mongodb
+docker rmi sandyhu/piggymetrics-monitoring
+docker rmi sandyhu/piggymetrics-notification-service
+docker rmi sandyhu/piggymetrics-registry
+docker rmi sandyhu/piggymetrics-statistics-service
