@@ -19,7 +19,6 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 import java.util.Arrays;
 
 @SpringBootApplication
-@EnableDiscoveryClient
 @EnableOAuth2Client
 @EnableFeignClients
 @EnableGlobalMethodSecurity(prePostEnabled = true)

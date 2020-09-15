@@ -16,7 +16,7 @@ services:
   config:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: sandyhu/piggymetrics-config
+    image: sandyhu/piggymetrics-config:$piggy_image_version
     restart: always
     ports:
       - 8888
@@ -28,7 +28,7 @@ services:
   registry:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: sandyhu/piggymetrics-registry
+    image: sandyhu/piggymetrics-registry:$piggy_image_version
     restart: always
     depends_on:
       - config
@@ -44,7 +44,7 @@ services:
   gateway:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: sandyhu/piggymetrics-gateway
+    image: sandyhu/piggymetrics-gateway:$piggy_image_version
     restart: always
     depends_on:
       - config
@@ -64,7 +64,7 @@ services:
       STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
       ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: sandyhu/piggymetrics-auth-service
+    image: sandyhu/piggymetrics-auth-service:$piggy_image_version
     restart: always
     ports:
       - 5000
@@ -78,7 +78,7 @@ services:
   auth-mongodb:
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: sandyhu/piggymetrics-mongodb
+    image: sandyhu/piggymetrics-mongodb:$piggy_image_version
     restart: always
     ports:
       - 27017
@@ -92,7 +92,7 @@ services:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: sandyhu/piggymetrics-account-service
+    image: sandyhu/piggymetrics-account-service:$piggy_image_version
     restart: always
     ports:
       - 6000
@@ -107,7 +107,7 @@ services:
     environment:
       INIT_DUMP: account-service-dump.js
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: sandyhu/piggymetrics-mongodb
+    image: sandyhu/piggymetrics-mongodb:$piggy_image_version
     restart: always
     ports:
       - 27017
@@ -121,7 +121,7 @@ services:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
       STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
-    image: sandyhu/piggymetrics-statistics-service
+    image: sandyhu/piggymetrics-statistics-service:$piggy_image_version
     restart: always
     ports:
       - 8888
@@ -135,7 +135,7 @@ services:
   statistics-mongodb:
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: sandyhu/piggymetrics-mongodb
+    image: sandyhu/piggymetrics-mongodb:$piggy_image_version
     restart: always
     ports:
       - 27017
@@ -149,7 +149,7 @@ services:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
       NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
-    image: sandyhu/piggymetrics-notification-service
+    image: sandyhu/piggymetrics-notification-service:$piggy_image_version
     restart: always
     ports:
       - 8000
@@ -161,7 +161,7 @@ services:
         max-file: "10"
 
   notification-mongodb:
-    image: sandyhu/piggymetrics-mongodb
+    image: sandyhu/piggymetrics-mongodb:$piggy_image_version
     restart: always
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
@@ -175,7 +175,7 @@ services:
   monitoring:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: sandyhu/piggymetrics-monitoring
+    image: sandyhu/piggymetrics-monitoring:$piggy_image_version
     restart: always
     depends_on:
       - config

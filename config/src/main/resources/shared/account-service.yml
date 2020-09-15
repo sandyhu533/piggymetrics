@@ -16,6 +16,10 @@ spring:
       database: piggymetrics
       port: 27017
 
+ribbon:
+  eureka:
+    enabled: false
+
 server:
   servlet:
     context-path: /accounts

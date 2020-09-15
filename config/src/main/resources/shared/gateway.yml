@@ -6,40 +6,46 @@ hystrix:
           thread:
             timeoutInMilliseconds: 20000
 
-ribbon:
-  ReadTimeout: 20000
-  ConnectTimeout: 20000
-
 zuul:
-  ignoredServices: '*'
-  host:
-    connect-timeout-millis: 20000
-    socket-timeout-millis: 20000
-
   routes:
     auth-service:
         path: /uaa/**
-        url: http://auth-service:5000
-        stripPrefix: false
-        sensitiveHeaders:
+        serviceId: auth-service
 
     account-service:
         path: /accounts/**
         serviceId: account-service
         stripPrefix: false
-        sensitiveHeaders:
 
     statistics-service:
         path: /statistics/**
         serviceId: statistics-service
         stripPrefix: false
-        sensitiveHeaders:
 
     notification-service:
         path: /notifications/**
         serviceId: notification-service
         stripPrefix: false
-        sensitiveHeaders:
+
+ribbon:
+  eureka:
+    enabled: false
+
+auth-service:
+  ribbon:
+    listOfServers: http://auth-service:5000/uaa/
+
+account-service:
+  ribbon:
+    listOfServers: http://account-service:6000/accounts/
+
+statistics-service:
+  ribbon:
+    listOfServers: http://statistics-service:8888/statistics/
+
+notification-service:
+  ribbon:
+    listOfServers: http://notification-service:8000/notifications/
 
 server:
   port: 4000

@@ -29,7 +29,7 @@ spec:
       - env:
         - name: CONFIG_SERVICE_PASSWORD
           value: password
-        image: sandyhu/piggymetrics-config
+        image: sandyhu/piggymetrics-config:v1.0.2
         imagePullPolicy: ""
         name: config
         ports:

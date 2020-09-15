@@ -29,7 +29,7 @@ spec:
       - env:
         - name: MONGODB_PASSWORD
           value: password
-        image: sandyhu/piggymetrics-mongodb
+        image: sandyhu/piggymetrics-mongodb:v1.0.2
         imagePullPolicy: ""
         name: notification-mongodb
         ports:
