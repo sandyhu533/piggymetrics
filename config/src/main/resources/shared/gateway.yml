@@ -9,8 +9,10 @@ hystrix:
 zuul:
   routes:
     auth-service:
-        path: /uaa/**
-        serviceId: auth-service
+      path: /uaa/**
+      url: http://auth-service:5000
+      stripPrefix: false
+      sensitiveHeaders:
 
     account-service:
         path: /accounts/**
@@ -30,10 +32,6 @@ zuul:
 ribbon:
   eureka:
     enabled: false
-
-auth-service:
-  ribbon:
-    listOfServers: http://auth-service:5000/uaa/
 
 account-service:
   ribbon:

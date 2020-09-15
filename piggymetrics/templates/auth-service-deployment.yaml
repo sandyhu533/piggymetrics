@@ -37,7 +37,7 @@ spec:
           value: password
         - name: STATISTICS_SERVICE_PASSWORD
           value: password
-        image: sandyhu/piggymetrics-auth-service:v1.0.2
+        image: sandyhu/piggymetrics-auth-service:v1.0.4
         imagePullPolicy: ""
         name: auth-service
         ports:

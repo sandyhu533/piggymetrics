@@ -29,8 +29,8 @@ spec:
       - env:
         - name: CONFIG_SERVICE_PASSWORD
           value: password
-        image: sandyhu/piggymetrics-config:v1.0.2
-        imagePullPolicy: ""
+        image: sandyhu/piggymetrics-config:v1.0.4
+        imagePullPolicy: "Always"
         name: config
         ports:
         - containerPort: 8888

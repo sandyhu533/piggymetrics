@@ -33,7 +33,7 @@ spec:
           value: password
         - name: NOTIFICATION_SERVICE_PASSWORD
           value: password
-        image: sandyhu/piggymetrics-notification-service:v1.0.2
+        image: sandyhu/piggymetrics-notification-service:v1.0.4
         imagePullPolicy: ""
         name: notification-service
         ports:

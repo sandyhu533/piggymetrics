@@ -33,7 +33,7 @@ spec:
           value: password
         - name: MONGODB_PASSWORD
           value: password
-        image: sandyhu/piggymetrics-account-service:v1.0.2
+        image: sandyhu/piggymetrics-account-service:v1.0.4
         imagePullPolicy: ""
         name: account-service
         ports:
